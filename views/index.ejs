@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html ng-app="OdontApp">
+
+<head>
+
+    <meta charset="utf-8" />
+    <!-- 
+	<base href="/"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-ng-bind="$state.current.data.pageTitle + ' - OdontApp'">OdontApp</title>
+    <link rel="icon" href="images/favicon.ico" type="image/vnd.microsoft.icon">
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="stylesheets/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/core.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/components.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/colors.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+</head>
+
+<body class="pace-done">
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse" ng-hide="!isLogin">
+        <div class="navbar-header">
+            <a class="navbar-brand"><img src="images/logo.png" alt="" /></a>
+            <ul class="nav navbar-nav pull-right visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                <li class="dropdown"></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="images/nouser.png" alt="" />
+                        <span>{{userData.Nombre}}</span>
+                        <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a ui-sref="perfil"><i class="icon-user-plus"></i>Mi Perfil</a></li>
+                        <li class="divider"></li>
+                        <li><a ui-sref="login" id="btnCloseSession"><i class="icon-switch2"></i>Cerrar sesión</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Second navbar -->
+    <div class="navbar navbar-default" id="navbar-second" ng-hide="!isLogin">
+        <ul class="nav navbar-nav no-border visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
+        </ul>
+        <div class="navbar-collapse collapse" id="navbar-second-toggle">
+            <ul class="nav navbar-nav">
+                <li id="modInicio"><a ui-sref="pacientes" ui-sref-active="active"><i class="icon-user"></i><span> Pacientes</span></a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-grid"></i> Historia <span class="caret"></span></a>
+                    <ul class="dropdown-menu width-250">
+                        <li><a ui-sref="newHC" ui-sref-active="active">Nuevo registro</a></li>
+                        <li><a ui-sref="ConsultarHC" ui-sref-active="active">Consultar registro</a></li>
+                        <li>
+                            <a ui-sref="#" ui-sref-active="active"></a>
+                        </li>
+                </li>
+                </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-wrench2"></i> Herramientas <span class="caret"></span></a>
+                    <ul class="dropdown-menu width-250">
+                        <li><a ui-sref="userAdm">Administrar usuarios</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /second navbar -->
+    <div id="formPrincipal" class="parent">
+        <!-- Page container -->
+        <div class="page-container">
+            <!-- Page content -->
+            <div class="page-content">
+                <!-- Main content -->
+                <div class="content-wrapper">
+                    <br>
+                    <!-- Content area -->
+                    <div class="content">
+                        <div class="panel panel-flat panel-collapsed">
+                            <div class="panel-heading">
+                                <h3 class="card-title text-bold">Administración de pacientes</h3>
+                                <div class="header-elements">
+                                    <div class="list-icons">
+                                        <a class="list-icons-item" data-action="collapse"></a>
+                                        <a class="list-icons-item" data-action="reload"></a>
+                                        <a class="list-icons-item" data-action="remove"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <form class="mb-3" id="pacienteField" data-ng-submit="guardarPaciente(paciente)">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <spam>Tipo De documento</spam>
+                                            <select ng-model="paciente.TipId" class="form-control form-control-sm input-sm" required>
+                        <option value=""></option>
+                        <option value="RC">Registro civil</option>
+                        <option value="TI">Tarjeta de identidad</option>
+                        <option value="CC">Cedula de ciudadania</option>
+                        <option value="CE">Cedula de extranjeria</option>
+                    </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <spam>Documento de identidad</spam>
+                                            <input type="number" id="identificacion" class="form-control form-control-sm input-sm" ng-model="paciente.identificacion" data-ng-disabled="paciente.id" required>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <spam>Fecha nacimiento</spam>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="icon-calendar22"></i>
+                                                </div>
+                                                <input type="text" ng-model="paciente.fechaNac" data-ng-disabled="paciente.id" class="form-control form-control-sm input-sm daterange-basic" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <spam>Sexo</spam>
+                                            <select ng-model="paciente.sexo" class="form-control form-control-sm input-sm" required>
+                        <option value=""></option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <spam>Nombre Completo</spam>
+                                            <input type="text" class="form-control form-control-sm input-sm" ng-model="paciente.nombre" style="text-transform: uppercase" required/>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <spam>Dirección</spam>
+                                            <input type="text" class="form-control form-control-sm input-sm" ng-model="paciente.direccion" style="text-transform: uppercase" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <spam>Telefonos</spam>
+                                            <input type="text" class="form-control form-control-sm input-sm" ng-model="paciente.telefonos" style="text-transform: uppercase" required/>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <spam>Estado</spam>
+                                            <select ng-model="paciente.estado" data-ng-disabled="!paciente.id" class="form-control form-control-sm input-sm">
+                        <option value=""></option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                    </select>
+                                        </div>
+                                        <div class="form-group col-md-2"></div>
+                                        <div class="form-group col-md-2">
+                                            <span> </span>
+                                            <button type="submit" class="form-control btn btn-success btn-labeled btn-labeled-left btn-sm text-bold" id="guardarPaciente"><b><i ng-class="paciente.id ? 'icon-user-check' : 'icon-user-plus'"></i></b>
+                        <span data-ng-bind="paciente.id ? ' Actualizar' : ' Guardar'"></span>
+                    </button>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <span> </span>
+                                            <button type="reset" class="form-control btn bg-danger btn-labeled btn-labeled-left btn-sm text-bold" data-ng-click="cancelar()"><b><i class="icon-user-block"></i></b>Cancelar</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="callout callout-info" id="panelError" style="display: none">
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="clearfix">
+                                    <div grid-data id='listadoPaciente' grid-options="gridPacientes" grid-actions="gridActions" ">
+                <table class="table table-bordered table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombre</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr grid-item>
+                            <td ng-bind="item.Identificacion "></td>
+                            <td ng-bind="item.Nombre "></td>
+                            <td ng-bind="item.FechaNacimiento | date: 'dd/MM/yyyy' "></td>
+                            <td ng-bind="item.Estado ? 'Activo' : 'Inactivo' "></td>
+                            <td style="text-align: center; ">
+                                <a ng-click="actualizarPaciente(item) " 
+                                   class="btn bg-blue btn-mini " 
+                                   title="Actualizar "><i class="icon-user-check "></i>
+                                </a>                        
+                                <a ng-click="eliminarPaciente(item.id) " 
+                                   class="btn bg-warning btn-mini " 
+                                   title="Remover "><i class="icon-user-cancel "></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><hr>
+                <paginacion-element></paginacion-element>           
+            </div>	
+        </div>
+    </div>
+</div>
+
+					<!-- <ui-view></ui-view> -->
+				</div>
+				<!-- /content area -->
+			</div>
+			<!-- /main content -->
+		</div>
+		<!-- /page content -->
+	</div>
+	<!-- /page container -->
+</div>
+<footer data-ng-style="!isLogin ? 'position: fixed; bottom: 0; width: 100%' : '' ">
+    <div class=" ">
+        <p class="pull-right ">
+            Sistema de historia <a>| OdontApp</a>
+            <span class="lead "><i class="icon-terminal "></i> OdontApp</span>
+        </p>
+    </div>
+    <div class="clearfix "></div>
+</footer>
+<bb-alert></bb-alert>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js "></script>
+<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js "></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js "></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js "></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.min.js "></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js "></script>
+<script type="text/javascript " src="javascripts/angular-ui-router.min.js "></script>
+<script type="text/javascript " src="javascripts/angular-cookies.js "></script>
+<script type="text/javascript " src="javascripts/angular-scrollable-table.js "></script>
+<script type="text/javascript " src="javascripts/pagination.js "></script>
+<script type="text/javascript " src="javascripts/JSONToCSVConvertor.js "></script>
+<script type="text/javascript " src="javascripts/dataGrid.js "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.12/xlsx.full.min.js "></script>
+<script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js "></script>
+<script type="text/javascript " src="javascripts/alertExample.js "></script>
+<script type="text/javascript " src="javascripts/backcore/OdontApp.js "></script>
+<script type="text/javascript " src="javascripts/backcore/Api.js "></script>
+<script type="text/javascript " src="javascripts/backcore/directives.js "></script>
+<!-- Core JS files -->
+<script type="text/javascript " src="javascripts/plugins/loaders/pace.min.js "></script>
+<script type="text/javascript " src="javascripts/core/libraries/jquery.min.js "></script>
+<script type="text/javascript " src="javascripts/core/libraries/bootstrap.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/loaders/blockui.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/ui/nicescroll.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/ui/drilldown.js "></script>
+<!-- /core JS files -->
+<!-- Theme JS files -->
+<script type="text/javascript " src="javascripts/plugins/visualization/d3/d3.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/visualization/d3/d3_tooltip.js "></script>
+<script type="text/javascript " src="javascripts/plugins/forms/styling/switchery.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/forms/styling/uniform.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/forms/selects/bootstrap_multiselect.js "></script>
+<script type="text/javascript " src="javascripts/plugins/ui/moment/moment.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/notifications/bootbox.min.js "></script>
+<script type="text/javascript " src="javascripts/plugins/pickers/daterangepicker.js "></script>
+<script type="text/javascript " src="javascripts/core/ApiCore.js "></script>
+<script type="text/javascript " src="javascripts/pages/dashboard.js "></script>
+<script type="text/javascript " src="javascripts/pages/layout_navbar_secondary_fixed.js "></script>
+<!-- /theme JS files -->
+
+</html>

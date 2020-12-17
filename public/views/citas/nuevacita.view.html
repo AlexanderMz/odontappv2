@@ -1,0 +1,78 @@
+<div>
+    <div class="row" ng-if="!mostrarGrid">
+        <div class="form-group col-md-3">
+            <span>Identificacion</span>
+            <input type="text" ng-model="cita.identificacion" class="form-control form-control-sm input-sm" disabled required />
+        </div>
+        <div class="form-group col-md-9">
+            <span>Nombre</span>
+            <input type="text" ng-model="cita.nombre" class="form-control form-control-sm input-sm" disabled required />
+        </div>
+    </div>     
+    <div class="row">
+        <div class="form-group col-md-6">
+            <span>Fecha cita</span>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="icon-calendar22"></i>
+                </div>
+                <input type="text" ng-model="cita.fechacita" class="form-control form-control-sm input-sm daterange-basic"  required />
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <span>Hora cita</span>
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="icon-watch2"></i>
+                </div>
+                <input type="text" ng-model="cita.horacita" class="form-control form-control-sm input-sm" id="horacita" required />
+            </div>
+        </div>
+    </div>        
+    <div ng-if="mostrarGrid" grid-data id="listadoCitaPaciente" grid-options="gridCitaPacientes" grid-actions="gridActions2">
+        <table class="table table-xxs table-striped table-bordered table-hover datatable-selection-single">
+            <thead>
+                <tr>
+                    <th>Identificacion</th>
+                    <th>Nombre</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" class="form-control input-sm form-control-sm" ng-change="gridActions2.filter()" ng-model="item.Identificacion" filter-by="Identificacion" filter-type="text" grid-id="listadoCitaPaciente">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-sm form-control-sm" ng-change="gridActions2.filter()" ng-model="item.Nombre" filter-by="Nombre" filter-type="text" grid-id="listadoCitaPaciente">
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr grid-item ng-click="selectItm($event, this)" class="odd">
+                    <td ng-bind="item.Identificacion"> </td>
+                    <td ng-bind="item.Nombre"> </td>
+                </tr>
+            </tbody>
+        </table><br>
+        <paginacion-element></paginacion-element><br>
+    </div>
+    
+<script type="text/javascript">
+    $('.daterange-basic').daterangepicker({
+        locale: {format:'YYYY/MM/DD'},
+        singleDatePicker: true,
+        showDropdowns: true,
+        minDate: moment(),
+        maxYear: parseInt(moment().format('YYYY'),10),
+        parentEl: 'div.modal'               
+    }, (start, end) =>{
+        $scope.datoscita.fechacita = end.format("YYYY/MM/DD");
+    }).on('hide.daterangepicker', function(ev, picker) {
+        //do something, like clearing an input
+        $('.daterange-basic').val('');
+    });              
+
+    AnyTime.noPicker('#horacita');
+    $("#horacita").AnyTime_picker({
+        format: "%H:%i"
+    });
+</script>	                
+</div>

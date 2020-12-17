@@ -1,0 +1,78 @@
+/* Dark mode
+---------------------------------------------------*/
+
+@media(prefers-color-scheme: dark) {
+    body {
+        background-color: #1c1c1e;
+        color: #fefefe;
+    }
+    a {
+        color: #5fa9ee;
+    }
+    img {
+        filter: greyscale(20%);
+    }
+}
+
+a {
+    color: #00B7FF;
+}
+
+.table-xxs>thead>tr {
+    background-color: #37474F !important;
+    color: white !important;
+}
+
+.table-xxs>tbody>tr.trBack {
+    background-color: #00B7FF !important;
+    color: white !important;
+}
+
+div.AnyTime-win {
+    z-index: 9999
+}
+
+.bb-alert {
+    position: fixed;
+    bottom: 71%;
+    right: 1%;
+    margin-bottom: 0;
+    font-size: 1.2em;
+    padding: 1em 1.3em;
+    z-index: 2000;
+}
+
+.login-form {
+    margin: 0 auto 20px auto;
+    width: 320px;
+}
+
+#btnGuardarRegistro {
+    z-index: 999;
+    right: 0px !important;
+    margin-top: 0% !important;
+}
+
+
+/* .table-xxs > tbody> tr {
+  background-image: linear-gradient(
+    to top right,
+    rgb(231, 208, 208),
+    #d3d3b6 30%,
+    #c08383 70%,
+    rgb(54, 43, 43)
+  );
+  color: white !important;
+} */
+
+.transition {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    transform: scaleY(1);
+    height: auto;
+    max-height: 0;
+}
+
+.transition.collapsed {
+    max-height: 300px;
+}

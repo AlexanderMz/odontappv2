@@ -1,0 +1,147 @@
+<div class="panel panel-flat panel-collapsed">
+    <div class="panel-heading">
+        <h3 class="panel-title text-bold" data-ng-bind="$state.current.data.pageTitle"></h3>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+                <li><a data-action="reload"></a></li>
+                <li><a data-action="close"></a></li>
+            </ul>
+        </div>
+    </div>    
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group col-md-2 text-right">
+                <button class="btn bg-blue form-control" id="nuevoPaciente" popover-trigger="'mouseenter'" ><i class="icon-calendar3"></i> Nueva paciente</button>
+            </div> 
+        </div>
+        <div class="transition collapsible">
+            <form class="mb-3" id="pacienteField" data-ng-submit="guardarPaciente(paciente)" >
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <span>Tipo De documento</span>
+                        <select ng-model="paciente.TipId" class="form-control form-control-sm input-sm"  data-ng-disabled="paciente.id" required uib-popover="Seleccione un tipo de documento" popover-trigger="'focus'">
+                            <option value=""></option>
+                            <option value="RC">Registro civil</option>
+                            <option value="TI">Tarjeta de identidad</option>
+                            <option value="CC">Cedula de ciudadania</option>
+                            <option value="CE">Cedula de extranjeria</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span>Documento de identidad</span>
+                        <input type="number" id="identificacion" class="form-control form-control-sm input-sm" ng-model="paciente.identificacion" data-ng-disabled="paciente.id" required
+                        uib-popover="Identificacion del paciente" popover-trigger="'focus'" >
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span>Fecha nacimiento</span>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="icon-calendar22"></i>
+                            </div>
+                            <input type="text" ng-model="paciente.fechaNac" data-ng-disabled="paciente.id" class="form-control form-control-sm input-sm daterange-basic" required />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span>Sexo</span>
+                        <select ng-model="paciente.sexo" class="form-control form-control-sm input-sm"  data-ng-disabled="paciente.id" required>
+                            <option value=""></option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <span>Nombre Completo</span>
+                        <input type="text" class="form-control form-control-sm input-sm" ng-model="paciente.nombre" style="text-transform: uppercase" required/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <span>Dirección</span>
+                        <input type="text" class="form-control form-control-sm input-sm" ng-model="paciente.direccion" style="text-transform: uppercase" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <span>Telefonos</span>
+                        <input type="text" class="form-control form-control-sm input-sm" ng-model="paciente.telefonos" style="text-transform: uppercase" required/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span>Estado</span>
+                        <select ng-model="paciente.estado" data-ng-disabled="!paciente.id" class="form-control form-control-sm input-sm">
+                            <option value=""></option>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div> 
+                    <div class="form-group col-md-2"></div>
+                    <div class="form-group col-md-2">
+                        <span> </span>
+                        <button type="submit" class="form-control btn btn-success btn-labeled btn-labeled-left btn-sm text-bold" id="guardarPaciente" ><b><i ng-class="paciente.id ? 'icon-user-check' : 'icon-user-plus'"></i></b>
+                            <span data-ng-bind="paciente.id ? ' Actualizar' : ' Guardar'"></span>
+                        </button>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <span> </span>
+                        <button type="reset" class="form-control btn bg-danger btn-labeled btn-labeled-left btn-sm text-bold" data-ng-click="cancelar()"><b><i class="icon-user-block"></i></b>Cancelar</button>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="callout callout-info" id="panelError" style="display: none">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="clearfix">
+            <div grid-data id='listadoPaciente' grid-options="gridPacientes" grid-actions="gridActions">
+                <table class="table table-xxs table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Identificación</th>
+                            <th>Nombre</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                        <tr>
+                            <td class="form-group">
+                                <input type="text" class="form-control input-sm form-control-sm" ng-change="gridActions.filter()" ng-model="item.Identificacion" filter-by="Identificacion" filter-type="text">
+                            </td>
+                            <td class="form-group">
+                                <input type="text" class="form-control input-sm form-control-sm" ng-change="gridActions.filter()" ng-model="item.Nombre" filter-by="Nombre" filter-type="text">
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr grid-item ng-class = "item.Estado ? '' : 'trBack'">
+                            <td ng-bind="item.Identificacion"></td>
+                            <td ng-bind="item.Nombre"></td>
+                            <td ng-bind="item.FechaNacimiento | date:'dd/MM/yyyy'"></td>
+                            <td ng-bind="item.Estado ? 'Activo' : 'Inactivo'"></td>
+                            <td style="text-align: center;">
+                                <a ng-click="actualizarPaciente(item)" 
+                                class="btn bg-blue btn-mini" 
+                                title="Actualizar" 
+                                uib-popover="Actualizar paciente" 
+                                popover-trigger="'mouseenter'">
+                                <i class="icon-user-check"></i>
+                            </a>                        
+                            <!-- <a ng-click="eliminarPaciente(item)" 
+                            class="btn bg-warning btn-mini" 
+                            title="Remover"><i class="icon-user-cancel"></i>
+                                </a> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-md-12 text-center" ng-hide="filtered.length">
+                    SIN REGISTROS
+                </div><hr>
+                <paginacion-element></paginacion-element>           
+            </div>	
+        </div>
+    </div>
+</div>

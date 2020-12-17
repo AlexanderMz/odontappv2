@@ -1,0 +1,123 @@
+<div class="panel panel-flat panel-collapsed">
+    <div class="panel-heading">
+        <h3 class="panel-title text-bold" data-ng-bind="$state.current.data.pageTitle"></h3>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+                <li><a data-action="reload"></a></li>
+                <li><a data-action="close"></a></li>
+            </ul>
+        </div>
+    </div>    
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group col-md-3">
+                <span>Mes</span>
+                <select ng-model="mesNumber" class="form-control form-control-sm input-sm" uib-popover="Filtrar por mes seleccione" popover-trigger="'mouseenter'"
+                filter-by="fechacita" filter-type="mesNumber" ng-change="gridActions.filter()" grid-id="listadoCita">
+                    <option value=""></option>
+                    <option value="1">Enero</option>
+                    <option value="2">Frebrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+            <div class="col-md-5 "></div>
+            <div class="form-group col-md-2 text-right">
+            </div>
+            <div class="form-group col-md-2 text-right">
+                <span>Administrar</span>
+                <button ng-click="nuevaCita()" class="btn bg-blue form-control" uib-popover-html="infohtml" popover-trigger="'mouseenter'" ><i class="icon-calendar3"></i> Nueva cita</button>
+            </div> 
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div grid-data id="listadoCita" grid-options="gridCitas" grid-actions="gridActions">                    
+                    <table class="table table-xxs table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Identificación</th>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Acción</th>
+                            </tr>
+                            <tr>
+                                <td class="form-group">
+                                    <input type="text" class="form-control input-sm form-control-sm" ng-change="gridActions.filter()" ng-model="item.Identificacion" filter-by="Identificacion" filter-type="text">
+                                </td>
+                                <td class="form-group">
+                                    <input type="text" class="form-control input-sm form-control-sm" ng-change="gridActions.filter()" ng-model="item.Nombre" filter-by="Nombre" filter-type="text">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr grid-item>
+                                <td ng-bind="item.identificacion"></td>
+                                <td ng-bind="item.nombre"></td>
+                                <td ng-bind="item.fechacita | date:'dd/MM/yyyy'"></td>
+                                <td ng-bind="item.horacita"></td>
+                                <td style="text-align: center;">
+                                    <a ng-click="editarCita(item)" 
+                                    class="btn bg-blue btn-mini" 
+                                    title="Reprogramar" 
+                                    uib-popover="Reprogramar cita" 
+                                    popover-trigger="'mouseenter'">
+                                    <i class="icon-check"></i>
+                                    </a>                        
+                                    <a ng-click="eliminarCita(item)" 
+                                    class="btn bg-warning btn-mini" 
+                                    title="Remover" 
+                                    uib-popover="Eliminar cita" 
+                                    popover-trigger="'mouseenter'">
+                                    <i class=" icon-close2"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>                       
+                    </table>
+                    <div class="col-md-12 text-center" ng-hide="gridCitas.data.length">
+                        SIN REGISTROS
+                    </div>
+                    <hr>
+                    <paginacion-element></paginacion-element>
+                </div>	
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bootbox modal fade in" tabindex="-1" role="dialog" id="nuevaCita">    
+    <form id="modalform">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Nueva cita</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="bootbox-body">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-labeled btn-labeled-left btn-sm text-bold text-right">
+                        <b><i class="icon-check"></i></b>Guardar
+                    </button>
+                    <button type="button" class="btn bg-danger btn-labeled btn-labeled-left btn-sm text-bold text-right">
+                        <b><i class="icon-x"></i></b>Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

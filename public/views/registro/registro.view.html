@@ -1,0 +1,100 @@
+<div class="panel panel-flat panel-collapsed">
+    <div class="panel-heading">
+        <h3 class="panel-title text-bold" data-ng-bind="$state.current.data.pageTitle"></h3>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a data-action="collapse"></a></li>
+            </ul>
+        </div>
+    </div>    
+    <div class="panel-body">
+        <form class="mb-3" id="registrosField" data-ng-submit="GuardarRegistro(registro)" >
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <span>Documento de identidad</span>
+                    <div class="input-group">
+                        <input type="number" id="identificacion" required class="form-control form-control-sm input-sm" ng-model="registro.identificacion" data-ng-disabled="registro.idpaciente" required uib-popover="Identificacion del paciente" popover-trigger="'focus'" >
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-sm btn-default" uib-popover="Buscar paciente" popover-trigger="'mouseenter'" data-paciente="{}" ng-click="buscarPaciente()">
+                                <i class="icon-search4"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <span>Nombre Completo</span>
+                    <input type="text" class="form-control form-control-sm input-sm" ng-model="registro.nombrepaciente" style="text-transform: uppercase" disabled/>
+                </div>                
+                <div class="form-group col-md-2">
+                    <span>Fecha Nacimiento</span>
+                    <input type="text" class="form-control form-control-sm input-sm" ng-model="registro.fechaNacimiento" style="text-transform: uppercase" disabled/>
+                </div>                
+                <div class="form-group col-md-3">
+                    <span>Administrar</span>
+                <button type="submit" id="btnGuardarRegistro" class="form-control btn bg-blue btn-labeled btn-labeled-left btn-sm text-bold affix-top" uib-popover="Guardar registro" popover-trigger="'mouseenter'" ><b><i class="icon-check2"></i></b> Guardar registro</button>
+                </div>
+                <div class="col-md-12">
+                    <uib-tabset active="activeJustified" justified="true">
+                        <uib-tab index="0" heading="HISTORIA GENERAL ANTERIOR">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <strong>Motivo de consulta</strong>
+                                    <textarea ng-model="registro.datosconsulta.motivo" rows="5" cols="5" class="form-control" placeholder="Motivo de consulta"></textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <strong>Antecedentes personales y familiares</strong>
+                                    <textarea ng-model="registro.datosconsulta.antecedentes" rows="5" cols="5" class="form-control" placeholder="Antecedentes personales y familiares"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <strong>Alergias</strong>
+                                    <textarea ng-model="registro.datosconsulta.alergias" rows="2" cols="5" class="form-control" placeholder="Alergias en general y medicamentos"></textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <strong>Otros problemas</strong>
+                                    <textarea ng-model="registro.datosconsulta.otroproblemas" rows="2" cols="5" class="form-control info" placeholder="- Endocrino (diabetes).
+- Cardiovascular (cardiopatías, hipertensión).
+- Sangre (hemofilia, alteraciones de la coagulación).
+- Infeccioso (hepatitis, fiebre reumática).
+- S. nervioso central (depresiones, epilepsia, parkinson).
+- Riñón (nefritis, insuficiencia renal).
+- Respiratorio (asma).
+- Drogodependencia."></textarea>                                
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <strong>Consumo de medicamentos</strong>
+                                    <textarea ng-model="registro.datosconsulta.consumomedicamentos" cols="5" rows="5" class="form-control" placeholder="Consumo de medicamentos en el momento actual"></textarea>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal buscar paciente -->
+<div class="bootbox modal fade in" tabindex="-1" role="dialog" id="buscarPaciente" >    
+    <form id="modalform">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="bootbox-body">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-danger btn-labeled btn-labeled-left btn-sm text-bold text-right" data-dismiss="modal">
+                        <b><i class="icon-x"></i></b>Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

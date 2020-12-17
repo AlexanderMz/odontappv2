@@ -1,0 +1,118 @@
+<div class="panel panel-flat panel-collapsed">
+	<div class="panel-heading">
+		<h3 class="panel-title text-bold" data-ng-bind="$state.current.data.pageTitle"></h3>							
+	</div>
+	<div class="panel-body">
+		<form class="mb-3" id="pacienteField" data-ng-submit="guardarUsuario(Usuario)" >
+			<div class="row">
+				<div class="form-group col-md-2">
+					<span>Tipo De documento</span>
+					<select ng-model="Usuario.TipId" class="form-control form-control-sm input-sm" required>
+						<option value=""></option>
+						<option value="CC">Cedula de ciudadania</option>
+						<option value="CE">Cedula de extranjeria</option>
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<span>No. Documento</span>
+					<input type="number" id="identificacion" class="form-control form-control-sm input-sm" ng-model="Usuario.identificacion" data-ng-disabled="Usuario.id" required>
+				</div>
+				<div class="form-group col-md-2">
+					<span>Rol</span>
+					<select class="form-control" tabindex="-1" aria-hidden="true" data-ng-model="Usuario.rolid">
+						<option data-ng-repeat="rol in rolUsuario" value="{{rol.id}}"> {{rol.Nombre}} </option> 
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<span>No. Registro</span>
+					<input type="number" id="registro" class="form-control form-control-sm input-sm" ng-model="Usuario.nroReg" required>
+				</div>
+				<div class="form-group col-md-2">
+					<span>Estado</span>
+					<select ng-model="Usuario.activo" data-ng-disabled="Usuario.id ? false : true" class="form-control form-control-sm input-sm">
+						<option value=""></option>
+						<option value="1">Activo</option>
+						<option value="0">Inactivo</option>
+					</select>
+				</div> 
+			</div>
+			<div class="row">
+				<div class="form-group col-md-3">
+					<span>Nombre Completo</span>
+					<input type="text" class="form-control form-control-sm input-sm" ng-model="Usuario.nombre" style="text-transform: uppercase" required/>
+				</div>
+				<div class="form-group col-md-3">
+					<span>Correo electronico</span>
+					<input type="text" class="form-control form-control-sm input-sm" ng-model="Usuario.correo" required/>
+				</div>
+				<div class="form-group col-md-3">
+					<span>Dirección</span>
+					<input type="text" class="form-control form-control-sm input-sm" ng-model="Usuario.direccion" style="text-transform: uppercase" required/>
+				</div>
+				<div class="form-group col-md-3">
+					<span>Telefonos</span>
+					<input type="text" class="form-control form-control-sm input-sm" ng-model="Usuario.telefonos" style="text-transform: uppercase" required/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-3">
+					<span>Contraseña</span>
+					<input type="password" name="pwd" ng-model="Usuario.password" required="" class="form-control" />
+				</div>
+				<div class="form-group col-md-3">
+					<span>Confirmar contraseña</span>
+					<input type="password" name="confirmPassword" ng-model="Usuario.confirmPassword" required="" compare-to="Usuario.password" class="form-control" />
+				</div>
+				<div class="form-group col-md-2"></div>
+				<div class="form-group col-md-2">
+					<span> </span>
+					<button type="submit" class="form-control btn btn-success btn-labeled btn-labeled-left btn-sm text-bold" id="guardarUsuario" ><b><i ng-class="Usuario.id ? 'icon-user-check' : 'icon-user-plus'"></i></b>
+						<span data-ng-bind="Usuario.id ? ' Actualizar' : ' Guardar'"></span>
+					</button>
+				</div>
+				<div class="form-group col-md-2">
+					<span> </span>
+					<button type="reset" class="form-control btn bg-danger btn-labeled btn-labeled-left btn-sm text-bold" data-ng-click="cancelar()"><b><i class="icon-user-block"></i></b>Cancelar</button>
+				</div>
+			</div>
+			<div class="form-group col-md-12">
+				<div class="callout callout-info" id="panelError" style="display: none">
+				</div>
+			</div>
+		</form>
+		<div class="clearfix">
+			<div grid-data id='listadoUsuarios' grid-options="gridUsuarios" grid-actions="gridActions" ">
+				<table class="table table-xxs table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Identificación</th>
+							<th>Nombre</th>
+							<th>Rol</th>
+							<th>Estado</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr grid-item>
+							<td ng-bind="item.Identificacion"></td>
+							<td ng-bind="item.Nombre"></td>
+							<td ng-bind="item.rolName"></td>
+							<td ng-bind="item.Activo ? 'Activo' : 'Inactivo'"></td>
+							<td style="text-align: center;">
+								<a ng-click="actualizarUsuario(item)" 
+								class="btn bg-blue btn-mini" 
+								title="Actualizar"><i class="icon-user-check"></i>
+							</a>                        
+							<a ng-click="eliminarUsuario(item.id)" 
+							class="btn bg-warning btn-mini" 
+							title="Remover"><i class="icon-user-cancel"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table><hr>
+				<paginacion-element></paginacion-element>           
+			</div>	
+		</div>
+	</div>
+</div>

@@ -1,0 +1,23 @@
+{
+    "name": "odontapp",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node bin/www",
+        "nodemon": "nodemon bin/www"
+    },
+    "dependencies": {
+        "bcrypt": "^3.0.6",
+        "body-parser": "^1.19.0",
+        "cookie-parser": "^1.4.4",
+        "debug": "~2.2.0",
+        "ejs": "~2.5.2",
+        "express": "^4.17.1",
+        "fullcalendar": "^3.10.0",
+        "morgan": "^1.9.1",
+        "mysql": "^2.18.1",
+        "nodemon": "^1.19.1",
+        "npm": "^6.9.0",
+        "serve-favicon": "^2.5.0"
+    }
+}

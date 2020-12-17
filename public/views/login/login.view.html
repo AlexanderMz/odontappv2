@@ -1,0 +1,35 @@
+<form class="login-form" role="form" id="loginform">
+    <div class="panel-body login-form" style="background-color: #37474F;">
+        <div class="text-center">
+        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-user-tie"></i></div>
+        <h5 class="content-group" style="color: white;">Bienvenido a
+            <img src="images/logo.png" style="width: 100%" alt="OdontApp" />
+            <small class="display-block">Ingrese sus credenciales</small></h5>
+        </div>
+        <fieldset>
+            <div class="form-group has-feedback has-feedback-left">
+                <input type="text" name="username" id="username" class="form-control" placeholder="Indentificación" ng-model="id" required
+                />
+                <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                <div class="form-control-feedback">
+                    <i class="icon-user text-muted"></i>
+                </div>
+            </div>
+            <div class="form-group has-feedback has-feedback-left">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" ng-model="pass" required
+                />
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                <div class="form-control-feedback">
+                    <i class="icon-lock2 text-muted"></i>
+                </div>
+            </div>
+            <span class="help-block text-danger" id="msgError"></span>
+            <div ng-show="error" class="alert alert-danger" ng-bind-html="msgError"></div>
+            <div class="form-actions">
+                <button id="enviar" type="submit" class="btn btn-primary btn-block">
+                    Iniciar sesión<i class="icon-circle-right2 position-right"></i>
+                </button>
+            </div>                        
+        </fieldset>
+    </div>
+</form>

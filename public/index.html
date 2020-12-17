@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html ng-app="OdontApp">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-ng-bind="'OdontApp - ' + $state.current.data.pageTitle">OdontApp</title>
+    <link rel="icon" href="images/favicon.ico" type="image/vnd.microsoft.icon">
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="stylesheets/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <!-- <link href="stylesheets/bootstrap.css" rel="stylesheet" type="text/css"> -->
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="stylesheets/bootstrap-theme.min.css" type="text/css">
+    <link href="stylesheets/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/core.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/components.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/colors.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/layout.min.css" rel="stylesheet" type="text/css">
+    <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="javascripts/plugins/fullcalendar/dist/fullcalendar.min.css">
+    <link rel="stylesheet" href="javascripts/plugins/fullcalendar/dist/fullcalendar.print.css">
+    <!-- /global stylesheets -->
+</head>
+
+<body class="pace-done">
+    <div class="pace  pace-inactive">
+        <div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+            <div class="pace-progress-inner"></div>
+        </div>
+        <div class="pace-activity"></div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse" ng-hide="!isLogin">
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="home"><img src="images/logo.png" alt="" /></a>
+            <ul class="nav navbar-nav pull-right visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav">
+                <li class="dropdown"></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="images/nouser.png" alt="" />
+                        <span>{{userData.Nombre}}</span>
+                        <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a ui-sref="perfil"><i class="icon-user-plus"></i>Mi Perfil</a></li>
+                        <li class="divider"></li>
+                        <li><a ui-sref="login" id="btnCloseSession"><i class="icon-switch2"></i>Cerrar sesión</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Second navbar -->
+    <div class="navbar navbar-default" id="navbar-second" ng-hide="!isLogin">
+        <ul class="nav navbar-nav no-border visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-menu7"></i></a></li>
+        </ul>
+        <div class="navbar-collapse collapse" id="navbar-second-toggle">
+            <ul class="nav navbar-nav">
+                <li ui-sref-active="active"><a ui-sref="home"><i class="icon-home"></i><span> Inicio</span></a></li>
+                <li class="dropdown" ui-sref-active="active">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="icon-grid"></i> Historia <span class="caret"></span></a>
+                    <ul class="dropdown-menu width-250">
+                        <li ui-sref-active="active"><a ui-sref="newHC">Nuevo registro</a></li>
+                        <li ui-sref-active="active"><a ui-sref="ConsultarHC">Consultar registro</a></li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="#"></a>
+                        </li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active"><a ui-sref="pacientes"><i class="icon-user"></i><span> Pacientes</span></a></li>
+                <li ui-sref-active="active"><a ui-sref="newCita"><i class="icon-user"></i><span> Citas</span></a></li>
+                <li class="dropdown" ui-sref-active="active">
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class=" icon-wrench2"></i> Herramientas <span class="caret"></span></a>
+                    <ul class="dropdown-menu width-250">
+                        <li ui-sref-active="active"><a ui-sref="userAdm">Administrar usuarios</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /second navbar -->
+    <div id="formPrincipal" class="parent">
+        <!-- Page container -->
+        <div class="page-container">
+            <!-- Page content -->
+            <div class="page-content">
+                <!-- Main content -->
+                <div class="content-wrapper">
+                    <br>
+                    <!-- Content area -->
+                    <div class="content">
+                        <ui-view></ui-view>
+                    </div>
+                    <!-- /content area -->
+                </div>
+                <!-- /main content -->
+            </div>
+            <!-- /page content -->
+        </div>
+        <!-- /page container -->
+    </div>
+    <footer data-ng-style="!isLogin ? 'position: fixed; bottom: 0; width: 100%' : ''">
+        <div class="">
+            <p class="pull-right">
+                Sistema de historia <a>| OdontApp</a>
+                <span class="lead"><i class="icon-terminal"></i> OdontApp</span>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <bb-alert></bb-alert>
+</body>
+<!-- Core JS files -->
+<script type="text/javascript" src="javascripts/plugins/loaders/pace.min.js"></script>
+<!-- <script type="text/javascript" src="javascripts/core/libraries/jquery.min.js"></script> -->
+<script type="text/javascript" src="javascripts/index/jquery-2.2.4.min.js"></script>
+<!-- <script type="text/javascript" src="javascripts/core/libraries/bootstrap.min.js"></script> -->
+<script type="text/javascript" src="javascripts/index/bootstrap.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/loaders/blockui.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/ui/nicescroll.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/ui/drilldown.js"></script>
+<!-- /core JS files -->
+<script type="text/javascript" src="javascripts/index/angular.min.js"></script>
+<script type="text/javascript" src="javascripts/index/ui-bootstrap-tpls-2.5.0.js"></script>
+<script type="text/javascript" src="javascripts/index/angular-animate.min.js"></script>
+<script type="text/javascript" src="javascripts/index/angular-aria.min.js"></script>
+<script type="text/javascript" src="javascripts/index/angular-messages.min.js"></script>
+<script type="text/javascript" src="javascripts/index/angular-material.min.js"></script>
+<!-- <script type="text/javascript" src="javascripts/index/angular-ui-router.min.js"></script> -->
+<script type="text/javascript" src="javascripts/index/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="javascripts/index/angular-cookies.js"></script>
+<script type="text/javascript" src="javascripts/index/angular-scrollable-table.js"></script>
+<script type="text/javascript" src="javascripts/index/pagination.js"></script>
+<script type="text/javascript" src="javascripts/index/JSONToCSVConvertor.js"></script>
+<script type="text/javascript" src="javascripts/index/dataGrid.js"></script>
+<script type="text/javascript" src="javascripts/index/xlsx.full.min.js"></script>
+<script type="text/javascript" src="javascripts/index/FileSaver.min.js"></script>
+<script type="text/javascript" src="javascripts/index/alertExample.js"></script>
+<script type="text/javascript" src="javascripts/backcore/textos.js"></script>
+<script type="text/javascript" src="javascripts/backcore/OdontApp.js"></script>
+<script type="text/javascript" src="javascripts/backcore/Api.js"></script>
+<script type="text/javascript" src="javascripts/backcore/directives.js"></script>
+
+<!-- Theme JS files -->
+<script type="text/javascript" src="javascripts/plugins/visualization/d3/d3.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/visualization/d3/d3_tooltip.js"></script>
+<script type="text/javascript" src="javascripts/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/forms/styling/uniform.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/forms/selects/bootstrap_multiselect.js"></script>
+<script type="text/javascript" src="javascripts/plugins/ui/moment/moment.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/notifications/bootbox.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/pickers/daterangepicker.js"></script>
+<script type="text/javascript" src="javascripts/plugins/pickers/anytime.min.js"></script>
+<script type="text/javascript" src="javascripts/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="javascripts/core/ApiCore.js"></script>
+<script type="text/javascript" src="javascripts/backcore/scripts.js"></script>
+<!-- <script type="text/javascript" src="javascripts/pages/dashboard.js"></script> -->
+<script type="text/javascript" src="javascripts/pages/layout_navbar_secondary_fixed.js"></script>
+<!-- /theme JS files -->
+
+</html>
